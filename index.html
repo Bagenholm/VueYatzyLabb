@@ -1,0 +1,57 @@
+<html lang="sv">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="sheet-container">
+        <div class="row wrapper">
+          <div class="col-6 sheet-column">
+            <score-sheet
+              :uprow="upRows" 
+              :lowrow="lowRows">
+            </score-sheet>
+          </div>
+          
+          <div class="how-to col-6">
+            <h3>{{howTo.header}}</h3>
+            <p>
+              {{howTo.text}}
+            </p>
+            <a href='https://sv.wikipedia.org/wiki/Yatzy#Spelregler' target="_blank">Länk till regler</a>
+            <br><br>{{info}}
+          </div>
+        </div>
+      </div>    
+
+      <roll-and-dice
+        :rolls="rolls"
+        :dice="dice"
+        :show="showDice">
+      </roll-and-dice>
+
+      <modal v-show="showScoreModal" @close="$store.commit('toggleScoreModal'); $store.commit('resetGame');">
+          <h3 slot="header">Yatzy!</h3>
+          <p slot="body">Du fick {{totalPoints}} poäng!</p>
+      </modal>
+
+      <div class="container center">
+        <button class="button how-to-button" @click="$store.commit('toggleRulesModal')">Hur du spelar</button>
+      </div>
+
+      <modal v-show="showRulesModal" @close="$store.commit('toggleRulesModal')" id="rules-modal">
+        <h3 slot="header">{{howTo.header}}</h3>
+        <p slot="body">
+          {{howTo.text}}
+          <br><br>
+          <a href='https://sv.wikipedia.org/wiki/Yatzy#Spelregler'>Länk till regler</a>
+        </p>
+      </modal>
+
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
